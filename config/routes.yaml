@@ -1,0 +1,10 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+lucky:
+    path: /lucky
+    controller: App\Controller\LuckyController::index
+uid:
+    path: /uid
+    controller: App\Controller\LuckyController::generateUniqueId

@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  php73:
+#    image: registry.cn-hangzhou.aliyuncs.com/jimu/php:73-base
+#    image: php:73-base-0619
+    image: registry.cn-hangzhou.aliyuncs.com/jimu/php:738-1.0
+    container_name: php73
+    volumes:
+      - './log:/dev/shm'
+      - 'c:/work/gitlab/notification-system/notification/:/home/httpd/notification/'
+      - './php73/php-fpm.conf:/usr/local/etc/php-fpm.d/web.conf'
+#      - '.env_dev:/home/httpd/school-api/.env'
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - php73
+    volumes:
+      - 'c:/work/gitlab/notification-system/notification/:/home/httpd/notification/'
+      - './log/nginx_log:/var/log/nginx/'
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/fastcgi_params:/etc/nginx/fastcgi_params
+    ports:
+      - "8080:80"
+
