@@ -70,6 +70,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "pre-install-cmd": [
+            "npm install"
         ]
     },
     "conflict": {
