@@ -21,4 +21,6 @@
     * composer require --dev symfony/var-dumper 开发环境打印工具
     * composer require symfony/web-server-bundle --dev 开发环境运行工具
     * composer require --dev symfony/phpunit-bridge 单元测试
+    * composer require --dev symfony/browser-kit symfony/css-selector 功能测试
     * composer require --dev symfony/profiler-pack 探查器
+    * composer require --dev squizlabs/php_codesniffer 代码嗅探器

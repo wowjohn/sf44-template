@@ -37,6 +37,12 @@ class RsyncEnvCommand extends Command
     {
         $output->writeln('配置同步开始~');
 
+        if (strstr(PHP_OS, 'WIN')) {
+            $output->writeln('开发环境配置无需同步~');
+
+            return;
+        }
+
         $apolloClient = new ApolloClient();
 
         $env = getenv('APP_ENV');
