@@ -3,22 +3,27 @@
  * Created by PhpStorm.
  * User: baofan
  * Date: 2019/12/11
- * Time: 13:13
+ * Time: 13:13.
  */
 
 namespace App\Command;
 
 use Apollo\ApolloClient;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Exception;
 
 class RsyncEnvCommand extends Command
 {
     protected static $defaultName = 'cron:rsync-env';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -26,11 +31,6 @@ class RsyncEnvCommand extends Command
             ->setDescription('实时同步配置文件')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -46,12 +46,13 @@ class RsyncEnvCommand extends Command
         $apolloClient = new ApolloClient();
 
         $env = getenv('APP_ENV');
-        if($env === false)
+        if (false === $env) {
             $env = 'dev';
+        }
 
         $apolloAllConfigArray = $this->getApolloConfig();
 
-        if (!$apolloEnvConfigArray = $apolloAllConfigArray[$env]) {
+        if (! $apolloEnvConfigArray = $apolloAllConfigArray[$env]) {
             $output->writeln('配置环境不合法~');
 
             return;
@@ -65,7 +66,7 @@ class RsyncEnvCommand extends Command
         try {
             $apolloClient->noCacheRsync();
 
-            /**
+            /*
              * symfony4 保存至 .env
              */
             $apolloClient->getIsModifyStatus() && $apolloClient->saveToEnv();
@@ -82,30 +83,30 @@ class RsyncEnvCommand extends Command
     private function getApolloConfig()
     {
         return [
-            'dev'     => [
+            'dev' => [
                 'CONFIG_SERVER' => '192.168.0.1:30002',
-                'APP_ID'        => 'tmp-api',
-                'NAMESPACES'    => 'application',
+                'APP_ID' => 'tmp-api',
+                'NAMESPACES' => 'application',
             ],
-            'test'    => [
+            'test' => [
                 'CONFIG_SERVER' => '192.168.0.1:30004',
-                'APP_ID'        => 'tmp-api',
-                'NAMESPACES'    => 'application',
+                'APP_ID' => 'tmp-api',
+                'NAMESPACES' => 'application',
             ],
             'release' => [
                 'CONFIG_SERVER' => '192.168.0.1:30006',
-                'APP_ID'        => 'tmp-api',
-                'NAMESPACES'    => 'application',
+                'APP_ID' => 'tmp-api',
+                'NAMESPACES' => 'application',
             ],
-            'pre'     => [
+            'pre' => [
                 'CONFIG_SERVER' => '192.168.0.1:30008',
-                'APP_ID'        => 'tmp-api',
-                'NAMESPACES'    => 'application',
+                'APP_ID' => 'tmp-api',
+                'NAMESPACES' => 'application',
             ],
-            'prod'    => [
+            'prod' => [
                 'CONFIG_SERVER' => '192.168.0.1:30010',
-                'APP_ID'        => 'tmp-api',
-                'NAMESPACES'    => 'application',
+                'APP_ID' => 'tmp-api',
+                'NAMESPACES' => 'application',
             ],
         ];
     }

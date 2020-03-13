@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: baofan
  * Date: 2020/2/25
- * Time: 14:11
+ * Time: 14:11.
  */
 
 namespace App\Command;
@@ -24,11 +24,6 @@ class NpmInstallCommand extends Command
             ->setDescription('npm install')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
